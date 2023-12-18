@@ -1,69 +1,37 @@
 {
-  "Main": "/home/sasisekhar/Desktop/RA/Communication_protocol/coupled_communication_protocol/main/main_rt_model.cpp",
+  "Main": "/home/sasisekhar/Desktop/RA/Communication_protocol/Traffic_light/main/main_rt_model.cpp",
   "depth": 0,
   "Top": [
     {
-      "Coupled": "/home/sasisekhar/Desktop/RA/Communication_protocol/coupled_communication_protocol/main/include/top.hpp",
+      "Coupled": "/home/sasisekhar/Desktop/RA/Communication_protocol/Traffic_light/main/include/top.hpp",
       "depth": 1,
       "Atomics": [
         {
-          "Atomic": "/home/sasisekhar/Desktop/RA/Communication_protocol/coupled_communication_protocol/main/include/generator.hpp",
+          "Atomic": "/home/sasisekhar/Desktop/RA/Communication_protocol/Traffic_light/main/include/traffic_light.hpp",
           "depth": 2,
           "states": {
-            "val": "0",
-            "sigma": "1",
-            "deadline": "2.0"
+            "signal": "255, 0, 0",
+            "sigma": "1.0",
+            "deadline": "1.0"
           }
         },
         {
-          "Coupled": "/home/sasisekhar/Desktop/RA/Communication_protocol/coupled_communication_protocol/main/include/commstop.hpp",
+          "Atomic": "/home/sasisekhar/Desktop/RA/Communication_protocol/Traffic_light/main/include/led_output.hpp",
           "depth": 2,
-          "Atomics": [
-            {
-              "Atomic": "/home/sasisekhar/Desktop/RA/Communication_protocol/coupled_communication_protocol/main/include/ME_rx.hpp",
-              "depth": 3,
-              "states": {
-                "in_data": "0",
-                "model_output": "NULL",
-                "frame_num": "0",
-                "sigma": "0.01",
-                "deadline": "1.0"
-              }
-            },
-            {
-              "Atomic": "/home/sasisekhar/Desktop/RA/Communication_protocol/coupled_communication_protocol/main/include/ME_tx.hpp",
-              "depth": 3,
-              "states": {
-                "in_data": "NULL",
-                "out_data": "0",
-                "sigma": "std::numeric_limits<double>::infinity(",
-                "deadline": "1.0"
-              }
-            },
-            {
-              "Atomic": "/home/sasisekhar/Desktop/RA/Communication_protocol/coupled_communication_protocol/main/include/tcl.hpp",
-              "depth": 3,
-              "states": {}
-            },
-            {
-              "Atomic": "/home/sasisekhar/Desktop/RA/Communication_protocol/coupled_communication_protocol/main/include/dll.hpp",
-              "depth": 3,
-              "states": {
-                "upstream_in_data": "NULL",
-                "downstream_out_data": "NULL",
-                "downstream_in_data": "NULL",
-                "upstream_out_data": "NULL",
-                "downstream_tx": "false",
-                "upstream_tx": "false",
-                "frame_num": "0",
-                "downstream_rx_hist": "NULL",
-                "sigma": "std::numeric_limits<double>::infinity(",
-                "deadline": "1.0"
-              }
-            }
-          ]
+          "states": {
+            "colour": "255, 0, 0",
+            "sigma": "std::numeric_limits<double>::infinity(",
+            "deadline": "1.0"
+          }
         }
-      ]
+      ],
+      "Instance_names": {
+        "traffic_light": "atomic_1",
+        "led_output": "atomic_2"
+      },
+      "IC": {
+        "atomic_1->out": "atomic_2->in"
+      }
     }
   ]
 }

@@ -1,6 +1,6 @@
 idf_component_register( SRCS "main_rt_model.cpp" "include/drivers/manchester_encoder.c"
-                        REQUIRES driver console esp_rom
-                        INCLUDE_DIRS "." "include" "/home/sasisekhar/esp/esp-idf/components/esp_rom/include/esp32s3/rom")
+                        REQUIRES driver
+                        INCLUDE_DIRS "." "include")
 
 target_compile_options(${COMPONENT_LIB} PUBLIC -std=gnu++2b)
 target_compile_options(${COMPONENT_LIB} PRIVATE "-Wno-format")
