@@ -36,11 +36,11 @@ namespace cadmium::comms::example {
             RGB Y(32, 16, 0);
             RGB G(0, 32, 0);
             if(state.signal == R) {
-                state.signal = Y;
-            } else if(state.signal == Y) {
                 state.signal = G;
-            } else if(state.signal == G) {
+            } else if(state.signal == Y) {
                 state.signal = R;
+            } else if(state.signal == G) {
+                state.signal = Y;
             } else {
                 state.signal = R;
             }

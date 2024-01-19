@@ -89,7 +89,7 @@ class led_output : public Atomic<led_outputState> {
                 if(state.colour.G == 32) {
                     LED->addMessage("GREEN");
                 } else if(state.colour.G == 16) {
-                    LED->addMessage("Amber");
+                    LED->addMessage("AMBER");
                 } else if(state.colour.R == 32 && state.colour.G == 0) {
                     LED->addMessage("RED");
                 }

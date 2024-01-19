@@ -1,13 +1,13 @@
 {
-  "Main": "/home/sasisekhar/Desktop/RA/Communication_protocol/Traffic_light/main/main_rt_model.cpp",
+  "Main": "/home/sasisekhar/Desktop/My_Files_Linux/RA/Communication_protocol/Traffic_light/main/main_rt_model.cpp",
   "depth": 0,
   "Top": [
     {
-      "Coupled": "/home/sasisekhar/Desktop/RA/Communication_protocol/Traffic_light/main/include/top.hpp",
+      "Coupled": "/home/sasisekhar/Desktop/My_Files_Linux/RA/Communication_protocol/Traffic_light/main/include/top.hpp",
       "depth": 1,
       "Atomics": [
         {
-          "Atomic": "/home/sasisekhar/Desktop/RA/Communication_protocol/Traffic_light/main/include/traffic_light.hpp",
+          "Atomic": "/home/sasisekhar/Desktop/My_Files_Linux/RA/Communication_protocol/Traffic_light/main/include/traffic_light.hpp",
           "depth": 2,
           "states": {
             "signal": "255, 0, 0",
@@ -16,7 +16,7 @@
           }
         },
         {
-          "Atomic": "/home/sasisekhar/Desktop/RA/Communication_protocol/Traffic_light/main/include/led_output.hpp",
+          "Atomic": "/home/sasisekhar/Desktop/My_Files_Linux/RA/Communication_protocol/Traffic_light/main/include/led_output.hpp",
           "depth": 2,
           "states": {
             "colour": "255, 0, 0",
@@ -31,7 +31,9 @@
       },
       "IC": {
         "atomic_1->out": "atomic_2->in"
-      }
+      },
+      "EIC": [],
+      "EOC": []
     }
   ]
 }
