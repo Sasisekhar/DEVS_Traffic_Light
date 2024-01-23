@@ -1,6 +1,7 @@
 # -DNO_LOG_STATE
+# -DDEBUG_DELAY
 all:
-	g++ -std=gnu++20 -DDEBUG_DELAY -I main/ main/main_rt_model.cpp -o run && ./run
+	g++ -std=gnu++20 -I main/ main/main_rt_model.cpp -o run && ./run
 
 run:
 	./run

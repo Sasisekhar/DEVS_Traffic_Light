@@ -2,6 +2,7 @@
 #define RGB_HPP
 
 #include <iostream>
+#include <iomanip>
 
 namespace cadmium::comms::example {
     struct RGB {
@@ -24,9 +25,12 @@ namespace cadmium::comms::example {
 	 * @return output stream with the value of the bid already inserted.
 	 */
 	std::ostream& operator<<(std::ostream& out, const RGB& colour) {
-		out << "{ RGB: ";
-        out << (unsigned int) colour.R << ", " << (unsigned int) colour.G << ", " << (unsigned int) colour.B;
-        out << " }";
+		// out << "{ RGB: ";
+        // out << (unsigned int) colour.R << ", " << (unsigned int) colour.G << ", " << (unsigned int) colour.B;
+        // out << " }";
+        out << "0x" << std::setfill ('0') << std::setw(sizeof(uint8_t)*2)  << std::hex << (unsigned int)colour.R ;
+        out << std::setfill ('0') << std::setw(sizeof(uint8_t)*2)  << std::hex << (unsigned int)colour.G;
+        out << std::setfill ('0') << std::setw(sizeof(uint8_t)*2)  << std::hex << (unsigned int)colour.B;
 		
 		return out;
 	}

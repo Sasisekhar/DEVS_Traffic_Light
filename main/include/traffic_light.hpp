@@ -12,13 +12,13 @@ namespace cadmium::comms::example {
         double sigma;
         double deadline;
 
-        explicit traffic_lightState(): signal(255, 0, 0), sigma(1.0), deadline(1.0){
+        explicit traffic_lightState(): signal(0, 0, 0), sigma(0.0), deadline(1.0){
         }
     };
 
 #ifndef NO_LOGGING
     std::ostream& operator<<(std::ostream &out, const traffic_lightState& state) {
-        out << "Signal: " << state.signal;
+        out  << "Next State = " << state.signal;
         return out;
     }
 #endif
@@ -37,10 +37,13 @@ namespace cadmium::comms::example {
             RGB G(0, 32, 0);
             if(state.signal == R) {
                 state.signal = G;
+                state.sigma = 10;
             } else if(state.signal == Y) {
                 state.signal = R;
+                state.sigma = 2;
             } else if(state.signal == G) {
                 state.signal = Y;
+                state.sigma = 10;
             } else {
                 state.signal = R;
             }
@@ -59,8 +62,7 @@ namespace cadmium::comms::example {
 
         // time_advance function
         [[nodiscard]] double timeAdvance(const traffic_lightState& state) const override {     
-            //   return std::numeric_limits<double>::infinity();
-            return state.sigma;
+                return state.sigma;
         }
     };
 

@@ -9,7 +9,8 @@
 #endif
 
 #ifndef NO_LOGGING
-	#include "include/cadmium/simulation/logger/stdout.hpp"
+	// #include "include/cadmium/simulation/logger/stdout.hpp"
+	#include "include/cadmium/simulation/logger/csv.hpp"
 #endif
 
 using namespace cadmium::comms::example;
@@ -33,7 +34,8 @@ extern "C" {
 		#endif
 
 		#ifndef NO_LOGGING
-		rootCoordinator.setLogger<cadmium::STDOUTLogger>(";");
+		// rootCoordinator.setLogger<cadmium::STDOUTLogger>(";");
+		rootCoordinator.setLogger<cadmium::CSVLogger>("trafficLightLog.csv", ";");
 		#endif
 
 		rootCoordinator.start();

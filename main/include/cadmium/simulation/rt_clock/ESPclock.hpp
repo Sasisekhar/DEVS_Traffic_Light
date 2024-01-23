@@ -28,6 +28,7 @@
 #include "esp_log.h"
 #include "rt_clock.hpp"
 #include "../../exception.hpp"
+#include <thread>
 
 #include "interrupt_handler.hpp"
 
@@ -112,7 +113,9 @@ namespace cadmium {
             while(timeNow < rTimeLast) {
                 gptimer_get_resolution(executionTimer, &res);
                 gptimer_get_raw_count(executionTimer, &count);
-                timeNow = (double)count / (double)res;   
+                timeNow = (double)count / (double)res;  
+
+                std::this_thread::yield(); 
             }
        
             // while(T::now() < rTimeLast) {

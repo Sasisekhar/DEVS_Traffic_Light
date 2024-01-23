@@ -24,14 +24,15 @@ namespace cadmium::comms::example {
         RGB colour;
         double sigma;
         double deadline;
+        bool active;
 
-        explicit led_outputState(): colour(255, 0, 0), sigma(std::numeric_limits<double>::infinity()), deadline(1.0){
+        explicit led_outputState(): colour(0, 0, 0), sigma(std::numeric_limits<double>::infinity()), deadline(1.0), active(false){
         }
     };
 
 #ifndef NO_LOGGING
     std::ostream& operator<<(std::ostream &out, const led_outputState& state) {
-        out << "colour: " << state.colour;
+        out << "State = " << (state.active) ? "True" : "False";
         return out;
     }
 #endif
@@ -67,6 +68,7 @@ class led_output : public Atomic<led_outputState> {
 
         void internalTransition(led_outputState& state) const override {
             state.sigma = std::numeric_limits<double>::infinity();
+            state.active = false;
         }
 
         // external transition
@@ -75,7 +77,8 @@ class led_output : public Atomic<led_outputState> {
             for(const auto &x : in->getBag()) {
                 state.colour = x;
             }
-            state.sigma = 0.1;
+            state.sigma = 0.001;
+            state.active = true;
            }
         }
         
