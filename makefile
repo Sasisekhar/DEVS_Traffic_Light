@@ -1,19 +1,13 @@
 # -DNO_LOG_STATE
 # -DDEBUG_DELAY
-all:
-	g++ -std=gnu++20 -I main/ main/main_rt_model.cpp -o run && ./run
-
-run:
-	./run
+sim:
+	mkdir -p sim_output
+	g++ -std=gnu++20 -I main/ main/main.cpp -o main/run && cd sim_output && ../main/run
 
 clean:
 	rm -f *.o
 	rm -f *.csv
 	rm -f run
-
-setup:
-	. ${IDF_PATH}/export.sh
-	idf.py set-target esp32s3
 
 
 embedded:

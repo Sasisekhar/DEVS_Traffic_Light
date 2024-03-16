@@ -32,7 +32,7 @@ namespace cadmium::comms::example {
 
 #ifndef NO_LOGGING
     std::ostream& operator<<(std::ostream &out, const led_outputState& state) {
-        out << "State = " << (state.active) ? "True" : "False";
+        out << "State = " << state.active;
         return out;
     }
 #endif
@@ -77,7 +77,7 @@ class led_output : public Atomic<led_outputState> {
             for(const auto &x : in->getBag()) {
                 state.colour = x;
             }
-            state.sigma = 0.001;
+            state.sigma = 0.0001;
             state.active = true;
            }
         }

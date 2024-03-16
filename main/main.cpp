@@ -1,4 +1,5 @@
-#include <include/cadmium/simulation/rt_root_coordinator.hpp>
+#include "include/cadmium/simulation/rt_root_coordinator.hpp"
+#include "include/cadmium/simulation/root_coordinator.hpp"
 #include <limits>
 #include "include/top.hpp"
 
@@ -9,7 +10,7 @@
 #endif
 
 #ifndef NO_LOGGING
-	// #include "include/cadmium/simulation/logger/stdout.hpp"
+	#include "include/cadmium/simulation/logger/stdout.hpp"
 	#include "include/cadmium/simulation/logger/csv.hpp"
 #endif
 
@@ -31,16 +32,23 @@ extern "C" {
 		#else
 			cadmium::ChronoClock clock;
 			auto rootCoordinator = cadmium::RealTimeRootCoordinator<cadmium::ChronoClock<std::chrono::steady_clock>>(model, clock);
+
+			// auto rootCoordinator = cadmium::RootCoordinator(model);
 		#endif
 
 		#ifndef NO_LOGGING
-		// rootCoordinator.setLogger<cadmium::STDOUTLogger>(";");
-		rootCoordinator.setLogger<cadmium::CSVLogger>("trafficLightLog.csv", ";");
+		rootCoordinator.setLogger<cadmium::STDOUTLogger>(";");
+		// rootCoordinator.setLogger<cadmium::CSVLogger>("trafficLightLog.csv", ";");
 		#endif
 
 		rootCoordinator.start();
+
+		#ifdef RT_ESP32
 		rootCoordinator.simulate(std::numeric_limits<double>::infinity());
-		// rootCoordinator.simulate(5.99);
+		#else
+		rootCoordinator.simulate(23.0);
+		#endif
+
 		rootCoordinator.stop();	
 
 		#ifndef RT_ESP32

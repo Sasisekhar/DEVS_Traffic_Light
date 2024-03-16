@@ -1,2 +1,6 @@
 components/
 build/
+debug/
+sdkconfig
+sdkconfig.*
+managed_components/espressif__led_strip

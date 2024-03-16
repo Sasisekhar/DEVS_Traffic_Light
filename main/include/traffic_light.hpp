@@ -38,12 +38,15 @@ namespace cadmium::comms::example {
             if(state.signal == R) {
                 state.signal = G;
                 state.sigma = 10;
+                // state.sigma = 0.001;
             } else if(state.signal == Y) {
                 state.signal = R;
                 state.sigma = 2;
+                // state.sigma = 0.001;
             } else if(state.signal == G) {
                 state.signal = Y;
                 state.sigma = 10;
+                // state.sigma = 0.001;
             } else {
                 state.signal = R;
             }

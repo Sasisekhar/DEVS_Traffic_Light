@@ -3,8 +3,10 @@
   "configurations": [
     {
       "type": "espidf",
-      "name": "Launch",
-      "request": "launch"
+      "name": "Launch-name",
+      "request": "launch",
+      "mode": "auto",
+      "gdbinitFile": "${workspaceFolder}/gdbinit",
     }
   ]
 }

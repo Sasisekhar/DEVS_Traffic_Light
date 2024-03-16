@@ -1,35 +1,31 @@
-| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-S2 | ESP32-S3 |
-| ----------------- | ----- | -------- | -------- | -------- | -------- |
+| Tested Targets | ESP32 | ESP32-S3 |
+| -------------- | ----- | -------- |
 
-# _Sample project_
+# _Traffic Light_
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
-
-This is the simplest buildable example. The example is used by command `idf.py create-project`
-that copies the project to user specified path and set it's name. For more information follow the [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project)
-
-
+This is the a simple traffic light system example. The model can be simulated using the CADMIUM DEVS simulator, and can be executed on the ESP32S3
 
 ## How to use example
-We encourage the users to use the example as a template for the new projects.
-A recommended way is to follow the instructions on a [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project).
+For building and simulating the project, run the following command from the root directory:
+```sh
+make sim
+```
+For building, flashing and monitoring the execution of the model on an ESP32S3, run the following command:
+```sh
+. ~/esp/esp-idf/export.sh #or wherever you have installed ESP-IDF
+idf.py set-target esp32s3
+make embedded #Assumes your ESP32 is connected to port /dev/ttyACM0
+```
 
 ## Example folder contents
 
-The project **sample_project** contains one source file in C language [main.c](main/main.c). The file is located in folder [main](main).
+The source files of this project can be found in the **main** directory. The entry point file is the [main.cpp](main/main.cpp) file.
 
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt`
-files that provide set of directives and instructions describing the project's source files and targets
-(executable, library, or both). 
-
-Below is short explanation of remaining files in the project folder.
+The submodels can be found in the **include** directory
 
 ```
-├── CMakeLists.txt
 ├── main
-│   ├── CMakeLists.txt
-│   └── main.c
+│   ├── include
+│   └── main.cpp
 └── README.md                  This is the file you are currently reading
 ```
-Additionally, the sample project contains Makefile and component.mk files, used for the legacy Make based build system. 
-They are not used or needed when building with CMake and idf.py.
