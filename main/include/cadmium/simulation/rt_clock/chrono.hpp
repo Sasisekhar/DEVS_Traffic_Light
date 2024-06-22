@@ -28,6 +28,10 @@
 #include "rt_clock.hpp"
 #include "../../exception.hpp"
 
+#include "../../modeling/devs/component.hpp" //for the interrupt
+#include "../../modeling/devs/coupled.hpp" //for the interrupt
+#include "../../../RGB.hpp"
+
 #include "interrupt_handler.hpp"
 
 namespace cadmium {
@@ -40,6 +44,7 @@ namespace cadmium {
      protected:
         std::chrono::time_point<T> rTimeLast; //!< last real system time.
         std::optional<typename T::duration> maxJitter; //!< Maximum allowed delay jitter. This parameter is optional.
+        std::shared_ptr<Coupled> top_model;
      public:
 
         //! The empty constructor does not check the accumulated delay jitter.
@@ -51,6 +56,10 @@ namespace cadmium {
          */
         [[maybe_unused]] explicit ChronoClock(typename T::duration maxJitter) : ChronoClock() {
             this->maxJitter.emplace(maxJitter);
+        }
+
+        [[maybe_unused]] explicit ChronoClock(std::shared_ptr<Coupled> model) : ChronoClock() {
+            this->top_model = model;
         }
 
         /**
@@ -82,12 +91,19 @@ namespace cadmium {
                 std::chrono::duration_cast<typename T::duration>(std::chrono::duration<double>(timeNext - vTimeLast));
             rTimeLast += duration;
 
-       
-            // while(T::now() < rTimeLast) {
-            //     std::this_thread::yield();
-            // }
+            auto delta = std::chrono::duration_cast<typename T::duration>(std::chrono::duration<double>(timeNext - vTimeLast - 5.0));
 
-            std::this_thread::sleep_until(rTimeLast);
+            // cadmium::Component pseudo("pseudo");
+            // cadmium::comms::example::RGB Y(32, 16, 0);
+            // cadmium::Port<cadmium::comms::example::RGB > out;
+            // out = pseudo.addOutPort<cadmium::comms::example::RGB >("out");
+            // out->addMessage(Y);
+
+            while(T::now() < rTimeLast) {
+                std::this_thread::yield();
+            }
+
+            // std::this_thread::sleep_until(rTimeLast);
 
 #ifdef DEBUG_DELAY
             std::cout << "[DELAY] " << std::chrono::duration_cast<std::chrono::microseconds>(T::now() - rTimeLast) << std::endl;
