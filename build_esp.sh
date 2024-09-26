@@ -1,4 +1,3 @@
 source $EXPORT_IDF
-idf.py fullclean
-idf.py clean
+if [ -d "build" ]; then rm -Rf build; fi
 idf.py build
