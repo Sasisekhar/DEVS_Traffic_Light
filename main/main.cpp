@@ -1,17 +1,17 @@
-#include "include/cadmium/simulation/rt_root_coordinator.hpp"
-#include "include/cadmium/simulation/root_coordinator.hpp"
+#include "cadmium/simulation/rt_root_coordinator.hpp"
+#include "cadmium/simulation/root_coordinator.hpp"
 #include <limits>
 #include "include/top.hpp"
 
 #ifdef RT_ESP32
-	#include <include/cadmium/simulation/rt_clock/ESPclock.hpp>
+	#include <cadmium/simulation/rt_clock/ESPclock.hpp>
 #else
-	#include <include/cadmium/simulation/rt_clock/chrono.hpp>
+	#include <cadmium/simulation/rt_clock/chrono.hpp>
 #endif
 
 #ifndef NO_LOGGING
-	#include "include/cadmium/simulation/logger/stdout.hpp"
-	#include "include/cadmium/simulation/logger/csv.hpp"
+	#include "cadmium/simulation/logger/stdout.hpp"
+	#include "cadmium/simulation/logger/csv.hpp"
 #endif
 
 using namespace cadmium::comms::example;

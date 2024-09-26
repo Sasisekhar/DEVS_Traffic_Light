@@ -2,7 +2,7 @@
 if(ESP_PLATFORM)
     idf_component_register( SRCS "main.cpp" "include/drivers/manchester_encoder.c"
                             REQUIRES driver
-                            INCLUDE_DIRS "." "include")
+                            INCLUDE_DIRS "." "include" $ENV{CADMIUM})
 
     target_compile_options(${COMPONENT_LIB} PUBLIC -std=gnu++2b)
     target_compile_options(${COMPONENT_LIB} PRIVATE "-Wno-format")
@@ -19,7 +19,7 @@ else()
     add_executable(Traffic_Light main.cpp)
 
     # Add required libraries and include directories
-    target_include_directories(Traffic_Light PRIVATE "." "include")
+    target_include_directories(Traffic_Light PRIVATE "." "include" $ENV{CADMIUM})
 
     # Non-ESP32 specific compile options
     target_compile_options(Traffic_Light PUBLIC -std=gnu++2b)
