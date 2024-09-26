@@ -1,6 +1,6 @@
 components/
 build/
 debug/
-sdkconfig
 sdkconfig.*
 managed_components
+bin
