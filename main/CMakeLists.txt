@@ -11,7 +11,7 @@ if(ESP_PLATFORM)
     target_compile_options(${COMPONENT_LIB} PRIVATE "-DRT_ESP32")
     # target_compile_options(${COMPONENT_LIB} PRIVATE "-DNO_LOGGING")
     # target_compile_options(${COMPONENT_LIB} PRIVATE "-DNO_LOG_STATE")
-    target_compile_options(${COMPONENT_LIB} PRIVATE "-DDEBUG_DELAY")
+    # target_compile_options(${COMPONENT_LIB} PRIVATE "-DDEBUG_DELAY")
 else()
     message(STATUS "Configuring for non-ESP32")
 

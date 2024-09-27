@@ -77,7 +77,7 @@ class led_output : public Atomic<led_outputState> {
             for(const auto &x : in->getBag()) {
                 state.colour = x;
             }
-            state.sigma = 0.0001;
+            state.sigma = 0.1;
             state.active = true;
            }
         }
