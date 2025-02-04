@@ -37,8 +37,8 @@ extern "C" {
 		#endif
 
 		#ifndef NO_LOGGING
-		//rootCoordinator.setLogger<cadmium::STDOUTLogger>(";");
-		rootCoordinator.setLogger<cadmium::CSVLogger>("trafficLightLog.csv", ";");
+		rootCoordinator.setLogger<cadmium::STDOUTLogger>(";");
+		//rootCoordinator.setLogger<cadmium::CSVLogger>("trafficLightLog.csv", ";");
 		#endif
 
 		rootCoordinator.start();
