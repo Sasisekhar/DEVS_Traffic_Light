@@ -4,3 +4,4 @@ debug/
 sdkconfig.*
 managed_components
 bin
+*.csv
