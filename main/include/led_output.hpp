@@ -14,96 +14,95 @@
 #include <iostream>
 #include "cadmium/modeling/devs/atomic.hpp"
 
-namespace cadmium::comms::example {
+using namespace cadmium;
 
-    #ifdef RT_ESP32
-        static led_strip_handle_t led_strip;
-    #endif
+#ifdef RT_ESP32
+    static led_strip_handle_t led_strip;
+#endif
 
-    struct led_outputState {
-        RGB colour;
-        double sigma;
-        double deadline;
-        bool active;
+struct led_outputState {
+    RGB colour;
+    double sigma;
+    double deadline;
+    bool active;
 
-        explicit led_outputState(): colour(0, 0, 0), sigma(std::numeric_limits<double>::infinity()), deadline(1.0), active(false){
-        }
-    };
+    explicit led_outputState(): colour(0, 0, 0), sigma(std::numeric_limits<double>::infinity()), deadline(1.0), active(false){
+    }
+};
 
 #ifndef NO_LOGGING
-    std::ostream& operator<<(std::ostream &out, const led_outputState& state) {
-        out << "State = " << state.active;
-        return out;
-    }
+std::ostream& operator<<(std::ostream &out, const led_outputState& state) {
+    out << "State = " << state.active;
+    return out;
+}
 #endif
 
 class led_output : public Atomic<led_outputState> {
-        public:
-        Port<RGB> in;
+    public:
+    Port<RGB> in;
 
-        #ifndef RT_ESP32
-            Port<std::string> LED;
+    #ifndef RT_ESP32
+        Port<std::string> LED;
+    #endif
+
+    led_output(const std::string id) : Atomic<led_outputState>(id, led_outputState()) {
+        in = addInPort<RGB>("in");
+
+        #ifdef RT_ESP32
+            led_strip_config_t strip_config = {
+                .strip_gpio_num = 48,
+                .max_leds = 1, // at least one LED on board
+            };
+
+            led_strip_rmt_config_t rmt_config = {
+                .resolution_hz = 10 * 1000 * 1000, // 10MHz
+            };
+            rmt_config.flags.with_dma = false;
+            ESP_ERROR_CHECK(led_strip_new_rmt_device(&strip_config, &rmt_config, &led_strip));
+
+            led_strip_clear(led_strip);
+        #else
+            LED = addOutPort<std::string>("LED");
         #endif
+    }
 
-        led_output(const std::string id) : Atomic<led_outputState>(id, led_outputState()) {
-            in = addInPort<RGB>("in");
+    void internalTransition(led_outputState& state) const override {
+        state.sigma = std::numeric_limits<double>::infinity();
+        state.active = false;
+    }
 
-            #ifdef RT_ESP32
-                led_strip_config_t strip_config = {
-                    .strip_gpio_num = 48,
-                    .max_leds = 1, // at least one LED on board
-                };
-
-                led_strip_rmt_config_t rmt_config = {
-                    .resolution_hz = 10 * 1000 * 1000, // 10MHz
-                };
-                rmt_config.flags.with_dma = false;
-                ESP_ERROR_CHECK(led_strip_new_rmt_device(&strip_config, &rmt_config, &led_strip));
-
-                led_strip_clear(led_strip);
-            #else
-                LED = addOutPort<std::string>("LED");
-            #endif
+    // external transition
+    void externalTransition(led_outputState& state, double e) const override {
+        if(!in->empty()) {
+        for(const auto &x : in->getBag()) {
+            state.colour = x;
         }
-
-        void internalTransition(led_outputState& state) const override {
-            state.sigma = std::numeric_limits<double>::infinity();
-            state.active = false;
+        state.sigma = 0.1;
+        state.active = true;
         }
-
-        // external transition
-        void externalTransition(led_outputState& state, double e) const override {
-           if(!in->empty()) {
-            for(const auto &x : in->getBag()) {
-                state.colour = x;
+    }
+    
+    
+    // output function
+    void output(const led_outputState& state) const override {
+        #ifdef RT_ESP32
+            led_strip_set_pixel(led_strip, 0, state.colour.R, state.colour.G, state.colour.B);
+            led_strip_refresh(led_strip);
+        #else
+            if(state.colour.G == 32) {
+                LED->addMessage("GREEN");
+            } else if(state.colour.G == 16) {
+                LED->addMessage("AMBER");
+            } else if(state.colour.R == 32 && state.colour.G == 0) {
+                LED->addMessage("RED");
             }
-            state.sigma = 0.1;
-            state.active = true;
-           }
-        }
-        
-        
-        // output function
-        void output(const led_outputState& state) const override {
-            #ifdef RT_ESP32
-                led_strip_set_pixel(led_strip, 0, state.colour.R, state.colour.G, state.colour.B);
-                led_strip_refresh(led_strip);
-            #else
-                if(state.colour.G == 32) {
-                    LED->addMessage("GREEN");
-                } else if(state.colour.G == 16) {
-                    LED->addMessage("AMBER");
-                } else if(state.colour.R == 32 && state.colour.G == 0) {
-                    LED->addMessage("RED");
-                }
-            #endif
-        }
+        #endif
+    }
 
-        // time_advance function
-        [[nodiscard]] double timeAdvance(const led_outputState& state) const override {     
-            //   return std::numeric_limits<double>::infinity();
-            return state.sigma;
-        }
-    };
-}
+    // time_advance function
+    [[nodiscard]] double timeAdvance(const led_outputState& state) const override {     
+        //   return std::numeric_limits<double>::infinity();
+        return state.sigma;
+    }
+};
 #endif

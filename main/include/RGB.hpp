@@ -4,18 +4,17 @@
 #include <iostream>
 #include <iomanip>
 
-namespace cadmium::comms::example {
-    struct RGB {
-        uint8_t R;
-        uint8_t G;
-        uint8_t B;
+struct RGB {
+    uint8_t R;
+    uint8_t G;
+    uint8_t B;
 
-        bool operator==(const RGB& a) const {
-            return (R == a.R && G == a.G && B == a.B);
-        }
+    bool operator==(const RGB& a) const {
+        return (R == a.R && G == a.G && B == a.B);
+    }
 
-        explicit RGB(uint8_t _r, uint8_t _g, uint8_t _b): R(_r), G(_g), B(_b) {};
-    };
+    explicit RGB(uint8_t _r, uint8_t _g, uint8_t _b): R(_r), G(_g), B(_b) {};
+};
 
 #ifndef NO_LOGGING
 	/**
@@ -35,6 +34,5 @@ namespace cadmium::comms::example {
 		return out;
 	}
 #endif
-}
 
 #endif

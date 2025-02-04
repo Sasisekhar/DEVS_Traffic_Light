@@ -14,7 +14,7 @@
 	#include "cadmium/simulation/logger/csv.hpp"
 #endif
 
-using namespace cadmium::comms::example;
+using namespace cadmium;
 
 extern "C" {
 	#ifdef RT_ESP32
