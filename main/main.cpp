@@ -30,10 +30,10 @@ extern "C" {
 			cadmium::ESPclock clock;
 			auto rootCoordinator = cadmium::RealTimeRootCoordinator<cadmium::ESPclock<double>>(model, clock);
 		#else
-			// cadmium::ChronoClock clock;
-			// auto rootCoordinator = cadmium::RealTimeRootCoordinator<cadmium::ChronoClock<std::chrono::steady_clock>>(model, clock);
+			cadmium::ChronoClock clock;
+			auto rootCoordinator = cadmium::RealTimeRootCoordinator<cadmium::ChronoClock<std::chrono::steady_clock>>(model, clock);
 
-			auto rootCoordinator = cadmium::RootCoordinator(model);
+			// auto rootCoordinator = cadmium::RootCoordinator(model);
 		#endif
 
 		#ifndef NO_LOGGING
