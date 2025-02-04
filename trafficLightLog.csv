@@ -1,0 +1,29 @@
+sep=;
+time;model_id;model_name;port_name;data
+0;1;led_output;;State = 0
+0;2;traffic_light;;Next State = 0x000000
+0;1;led_output;;State = 1
+0;2;traffic_light;out;0x000000
+0;2;traffic_light;;Next State = 0x200000
+0;1;led_output;;State = 1
+0;2;traffic_light;out;0x200000
+0;2;traffic_light;;Next State = 0x002000
+0.1;1;led_output;LED;RED
+0.1;1;led_output;;State = 0
+10;1;led_output;;State = 1
+10;2;traffic_light;out;0x002000
+10;2;traffic_light;;Next State = 0x201000
+10.1;1;led_output;LED;GREEN
+10.1;1;led_output;;State = 0
+20;1;led_output;;State = 1
+20;2;traffic_light;out;0x201000
+20;2;traffic_light;;Next State = 0x200000
+20.1;1;led_output;LED;AMBER
+20.1;1;led_output;;State = 0
+22;1;led_output;;State = 1
+22;2;traffic_light;out;0x200000
+22;2;traffic_light;;Next State = 0x002000
+22.1;1;led_output;LED;RED
+22.1;1;led_output;;State = 0
+22.1;1;led_output;;State = 0
+22.1;2;traffic_light;;Next State = 0x002000
